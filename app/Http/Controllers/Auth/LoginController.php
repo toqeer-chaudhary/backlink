@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Utills\APP_CONSTS;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -25,7 +29,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/project';
 
     /**
      * Create a new controller instance.
@@ -36,4 +40,23 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    protected function sendLoginResponse(Request $request)
+    {
+        $request->session()->regenerate();
+        $this->clearLoginAttempts($request);
+
+        if (auth()->user()->status == APP_CONSTS::YES) { // if user status is inactive
+            if (auth()->user()->is_admin == APP_CONSTS::YES) {
+                return redirect()->to("admin");
+            } else {
+                return redirect()->to("project");
+            }
+        } else { // if not active
+            $this->guard()->logout();
+            return redirect()->route("login")
+                ->with("failure", "Your are temporarily blocked");
+        }
+    }
+
 }

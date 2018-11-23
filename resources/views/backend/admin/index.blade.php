@@ -28,7 +28,7 @@
                         <div class="card-body py-2">
                             <div class="row">
                                 <div class="col-12 col-md-6 align-self-center text-center text-md-left">
-                                    <h4>{{ $posts->count() }}</h4>
+                                    {{--<h4>{{ $posts->count() }}</h4>--}}
                                     <h4>{{ 6 }}</h4>
                                     <p class="mb-0">Total Posts</p>
                                 </div>

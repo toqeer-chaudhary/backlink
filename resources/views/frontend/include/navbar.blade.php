@@ -13,9 +13,9 @@
             @auth
                  {{--These links will only be shown if the logged in user is admin--}}
                 <ul class="nav navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route("post.create") }}">Posts</a>
-                    </li>
+                    {{--<li class="nav-item">--}}
+                        {{--<a class="nav-link" href="{{ route("post.create") }}">Posts</a>--}}
+                    {{--</li>--}}
                 </ul>
             @endauth
             <ul class="navbar-nav ml-auto">

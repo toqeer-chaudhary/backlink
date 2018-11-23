@@ -22,4 +22,4 @@
 
 {{--Special Page styles goes here--}}
 @yield("script")
-<script src="{{asset("backlist.jst.js")}}"></script>
+<script src="{{asset("assets/frontend/js/blog.js")}}"></script>

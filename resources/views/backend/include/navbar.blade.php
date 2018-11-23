@@ -140,29 +140,41 @@
                 </div>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-toggle="dropdown">
-                      <span class="d-inline-block d-md-none">
-                        <i class="align-middle" data-feather="settings"></i>
-                      </span>
-                    <span class="d-none d-sm-inline-block">
-                        <img src="{{ asset("assets/backend/images/user/".auth()->user()->image) }}"
-                             class="avatar img-fluid rounded-circle mr-1" alt="{{ auth()->user()->name }}" />
-                        <span class="text-dark">{{ auth()->user()->name }}</span>
-                      </span>
+                <a class="dropdown-item" href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
                 </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="#"><i class="align-middle mr-1" data-feather="user"></i> Profile</a>
-                    <a class="dropdown-item" href="{{ route('logout') }}"
-                       onclick="event.preventDefault();
-                                                                 document.getElementById('logout-form').submit();">
-                        <i class="align-middle mr-1" data-feather="log-out"></i>
-                        {{ __('Logout') }}
-                    </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                </div>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+
             </li>
+            {{--<li class="nav-item dropdown">--}}
+                {{--<a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-toggle="dropdown">--}}
+                      {{--<span class="d-inline-block d-md-none">--}}
+                        {{--<i class="align-middle" data-feather="settings"></i>--}}
+                      {{--</span>--}}
+                    {{--<span class="d-none d-sm-inline-block">--}}
+                        {{--<img src="{{ asset("assets/backend/images/user/".auth()->user()->image) }}"--}}
+                             {{--class="avatar img-fluid rounded-circle mr-1" alt="{{ auth()->user()->name }}" />--}}
+                        {{--<span class="text-dark">{{ auth()->user()->name }}</span>--}}
+                      {{--</span>--}}
+                {{--</a>--}}
+                {{--<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">--}}
+                    {{--<a class="dropdown-item" href="#"><i class="align-middle mr-1" data-feather="user"></i> Profile</a>--}}
+                    {{--<a class="dropdown-item" href="{{ route('logout') }}"--}}
+                       {{--onclick="event.preventDefault();--}}
+                                                                 {{--document.getElementById('logout-form').submit();">--}}
+                        {{--<i class="align-middle mr-1" data-feather="log-out"></i>--}}
+                        {{--{{ __('Logout') }}--}}
+                    {{--</a>--}}
+                    {{--<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">--}}
+                        {{--@csrf--}}
+                    {{--</form>--}}
+                {{--</div>--}}
+            {{--</li>--}}
         </ul>
     </div>
 </nav>

@@ -14,7 +14,7 @@ class ProjectController extends FrontendController
      */
     public function index()
     {
-        //
+        return view("frontend.project.index");
     }
 
     /**

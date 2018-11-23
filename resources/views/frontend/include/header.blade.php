@@ -9,4 +9,4 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 {{--Special Page styles goes here--}}
 @yield("styles")
-<link rel="stylesheet" type="text/css" href="{{asset("backlist.css")}}">
+<link rel="stylesheet" type="text/css" href="{{asset("assets/frontend/css/blog.css")}}">
