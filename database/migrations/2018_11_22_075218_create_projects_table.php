@@ -21,7 +21,9 @@ class CreateProjectsTable extends Migration
             $table->string('description');
             $table->string('url');
             $table->timestamps();
-            $table->softDeletes();
+//            $table->softDeletes();
+
+
         });
     }
 

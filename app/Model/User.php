@@ -37,6 +37,11 @@ class User extends Authenticatable
         return $this->hasMany(Project::class);
     }
 
+    // links
+    public function links() {
+        return $this->hasMany(Link::class);
+    }
+
     // single user
     public function findUser($id){
         return self::find($id);

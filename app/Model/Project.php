@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
 {
-    use SoftDeletes;
+//    use SoftDeletes;
 
     /**
      * The attributes that should be mutated to dates.
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
+//    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -37,12 +37,17 @@ class Project extends Model
 
     // multiple links
     public function links(){
-        return $this->belongsTo(Link::class);
+        return $this->hasMany(Link::class);
     }
 
     // all
     public function fetchAll(){
         return self::all();
+    }
+
+    // all
+    public function fetchByLoggedInUser(){
+        return auth()->user()->projects;
     }
 
     // store
@@ -58,6 +63,8 @@ class Project extends Model
 
     // delete
     public function deleteProject($project){
+//        dd($project->links);
+//        $project->links->delete();
         $project->delete();
     }
 }

@@ -54,7 +54,7 @@ $(document).ready(function () {
                         } else if (form.classList.contains("editLinkForm")) {
                             var formData  = new FormData(this);
                             var linkId = $("#linkId").val();
-                            var url = "/link/" + userId;
+                            var url = "/link/" + linkId;
                             updateLink(formData, url);
                         }
 
@@ -91,6 +91,29 @@ $(document).ready(function () {
             }
         })
     });
+    $(document).on("click",".deleteLink",function () {
+        var linkId =  $(this).data("id");
+
+        swal({
+            title: "Alert",
+            text: "Are you sure",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if(willDelete) {
+                $.ajax({
+                    url : 'link/' + linkId,
+                    method: 'delete',
+                    data : {_token:token},
+                    success: function (response) {
+                        $("#link"+linkId).fadeOut('slow');
+                        $.toaster({ message : 'Link Deleted', priority : 'danger' });
+                    }
+                });
+            }
+        })
+    });
 
     // editing tag,status,reason,category modal  process
     $(document).on("click",".editProject",function () {
@@ -106,6 +129,15 @@ $(document).ready(function () {
         $("#editProjectUrl").val(projectLink);
         $("#editProjectCategory").val(CategoryId);
 
+    });
+    $(document).on("click",".editLink",function () {
+        var linkId          = $(this).data("id");         // fetching the link id
+        var ProjectId       =  $(this).closest('tr')["0"].children[1].id;  // fetching the role icon
+        var BackLink        =  $(this).closest('tr')["0"].children[2].innerText;  // fetching the Project Link
+
+        $("#linkId").val(linkId);
+        $("#editLinkModal").val(ProjectId);
+        $("#editBackLink").val(BackLink);
     });
 
     // storing process
@@ -126,6 +158,23 @@ $(document).ready(function () {
             }
         });
     }
+    function storeLink(formData,action) {
+        $("#createLinkModal").modal("hide");
+        $.ajax({
+            url : action,
+            type : "post",
+            data : formData,
+            processData: false,
+            contentType: false,
+            success : function (response) {
+                $.toaster({ message : 'Link Created Successfully', priority : 'success' });
+                setTimeout(function() {
+                    // wait for toaster message then load page after 2 second
+                    window.location.href = "/link" ;
+                }, 1000);
+            }
+        });
+    }
 
     // editing  process
     function updateProject(formData,action) {
@@ -141,6 +190,23 @@ $(document).ready(function () {
                 setTimeout(function() {
                     // wait for toaster message then load page after 50 milli second
                     window.location.href = "/project" ;
+                }, 1000);
+            }
+        });
+    }
+    function updateLink(formData,action) {
+        $("#editLinkModal").modal("hide");
+        $.ajax({
+            url : action,
+            type : "post",
+            data : formData,
+            processData: false,
+            contentType: false,
+            success : function (response) {
+                $.toaster({ message : 'Link Updated Successfully', priority : 'info' });
+                setTimeout(function() {
+                    // wait for toaster message then load page after 50 milli second
+                    window.location.href = "/link" ;
                 }, 1000);
             }
         });

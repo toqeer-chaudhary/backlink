@@ -13,11 +13,6 @@
             </li>
 
             <li class="sidebar-item">
-                <a href="{{ route("category.index") }}" class="sidebar-link">
-                    <i class="align-middle" data-feather="aperture"></i> <span class="align-middle">Category</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
                 <a href="{{ route("project.index") }}" class="sidebar-link">
                     <i class="align-middle" data-feather="aperture"></i> <span class="align-middle">Project</span>
                 </a>

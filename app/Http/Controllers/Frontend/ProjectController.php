@@ -23,7 +23,7 @@ class ProjectController extends FrontendController
      */
     public function index()
     {
-        $projects = $this->_project->fetchAll();
+        $projects = $this->_project->fetchByLoggedInUser();
         $categories = $this->_category->fetchAll();
         return view("frontend.project.index",compact("projects","categories"));
     }

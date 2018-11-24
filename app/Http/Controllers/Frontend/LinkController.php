@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Model\Link;
+use App\Model\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class LinkController extends FrontendController
 {
+    private $_project;
+    private $_link;
+    public function __construct(Project $project, Link $link){
+        $this->_project = $project;
+        $this->_link    = $link;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,9 @@ class LinkController extends FrontendController
      */
     public function index()
     {
-        //
+        $projects = $this->_project->fetchByLoggedInUser();
+        $links    = $this->_link->fetchByLoggedInUser();
+        return view("frontend.link.index",compact("projects","links"));
     }
 
     /**
@@ -35,7 +45,8 @@ class LinkController extends FrontendController
      */
     public function store(Request $request)
     {
-        //
+        $request["user_id"] = auth()->id();
+        $this->_link->storeLink($request->all());
     }
 
     /**
@@ -67,9 +78,10 @@ class LinkController extends FrontendController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Link $link)
     {
-        //
+        $request["user_id"] = auth()->id();
+        $this->_link->updateLink($request->all(),$link);
     }
 
     /**
@@ -78,8 +90,8 @@ class LinkController extends FrontendController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Link $link)
     {
-        //
+        $this->_link->deleteLink($link);
     }
 }
