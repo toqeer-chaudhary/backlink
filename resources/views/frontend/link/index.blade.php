@@ -100,7 +100,15 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label for="createLinkUrl" class="font-weight-bold">{{ __('Link Url') }} :</label>
+                            <a class="btn btn-info text-white" id="by-manual">
+                               Enter Manually
+                            </a>
+                            <a class="btn btn-info text-white" id="by-file">
+                                Upload A File
+                            </a>
+                        </div>
+                        <div class="form-group d-none" id="backLinkFileUrl">
+                            <label for="createLinkUrl" class="font-weight-bold">{{ __('Back Link Url') }} :</label>
                             <textarea id="createLinkUrl" type="text" class="form-control{{ $errors->has('back_link') ? ' is-invalid' : '' }}"
                                    name="back_link" value="{{ old('back_link') }}"
                                       placeholder="https://google.com" required></textarea>
@@ -116,7 +124,10 @@
                             </span>
                             @endif
                         </div>
-
+                        <div class="form-group d-none" id="backLinkFileDiv">
+                            <label for="createLinkFile" class="font-weight-bold">{{ __('Back link File') }} :</label>
+                            <input type="file" class="form-control-file" name="backLinkFile">
+                        </div>
                         <div class="form-group">
                             <div class="float-right">
                                 <button type="submit" class="btn btn-success">

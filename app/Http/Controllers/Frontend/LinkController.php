@@ -45,8 +45,31 @@ class LinkController extends FrontendController
      */
     public function store(Request $request)
     {
-        $request["user_id"] = auth()->id();
-        $this->_link->storeLink($request->all());
+        $backlinks = explode(",",$request->back_link);
+        $duplicateArray = [];
+        $backLinksArrays = [];
+        $i = 0;
+        foreach ($backlinks as $backlink){
+            if (in_array($backlink,$duplicateArray)){ // if backlink exist it will continue
+                continue;
+            } else if(ctype_space($backlink) || $backlink == "," || empty($backlink) || !is_string($backlink)) {
+                continue;
+            }  else {
+                array_push($duplicateArray,$backlink); // if backlink not exist it will store
+                $i++;
+                $backLinksList["user_id"] = auth()->id();
+                $backLinksList["project_id"] = $request->project_id;
+                $backLinksList["back_link"] = $backlink ;
+                $backLinksList["created_at"] = now() ;
+                array_push($backLinksArrays,$backLinksList);
+            }
+        }
+        $result = $this->_link->storeLink($backLinksArrays);
+         if ($result && $i > 0){
+             return $i . " Links Are Stored Out Of ". count($backlinks) . " rest are duplicate or empty spaces";
+         } else {
+             return 0;
+         }
     }
 
     /**

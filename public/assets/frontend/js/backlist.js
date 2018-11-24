@@ -167,11 +167,16 @@ $(document).ready(function () {
             processData: false,
             contentType: false,
             success : function (response) {
-                $.toaster({ message : 'Link Created Successfully', priority : 'success' });
-                setTimeout(function() {
-                    // wait for toaster message then load page after 2 second
-                    window.location.href = "/link" ;
-                }, 1000);
+               if(response != 0){
+                   $.toaster({ message : response, priority : 'success' });
+                   // setTimeout(function() {
+                   //     // wait for toaster message then load page after 2 second
+                   //     window.location.href = "/link" ;
+                   // }, 1000);
+               } else {
+                   $.toaster({ message : 'Invalid Data', priority : 'danger' });
+               }
+
             }
         });
     }
@@ -211,5 +216,15 @@ $(document).ready(function () {
             }
         });
     }
+
+    $(document).on("click","#by-manual",function () {
+        $("#backLinkFileDiv").addClass("d-none");
+        $("#backLinkFileUrl").removeClass("d-none");
+    });
+
+    $(document).on("click","#by-file",function () {
+        $("#backLinkFileDiv").removeClass("d-none");
+        $("#backLinkFileUrl").addClass("d-none");
+    });
 
 });

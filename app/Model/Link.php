@@ -32,7 +32,8 @@ class Link extends Model
     // store
     public function storeLink($request){
         $link = new Link();
-        $link->create($request);
+        $link->insert($request); // to store array of rows at once
+        return true;
     }
 
     // update
