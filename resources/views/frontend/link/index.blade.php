@@ -111,7 +111,7 @@
                             <label for="createLinkUrl" class="font-weight-bold">{{ __('Back Link Url') }} :</label>
                             <textarea id="createLinkUrl" type="text" class="form-control{{ $errors->has('back_link') ? ' is-invalid' : '' }}"
                                    name="back_link" value="{{ old('back_link') }}"
-                                      placeholder="https://google.com" required></textarea>
+                                      placeholder="https://google.com"></textarea>
                             <div class="invalid-feedback">
                                 Please provide a valid Url.
                             </div>
@@ -126,7 +126,13 @@
                         </div>
                         <div class="form-group d-none" id="backLinkFileDiv">
                             <label for="createLinkFile" class="font-weight-bold">{{ __('Back link File') }} :</label>
-                            <input type="file" class="form-control-file" name="backLinkFile">
+                            <input id="createLinkFile" type="file" class="form-control-file" name="backLinkFile">
+                            <div class="invalid-feedback">
+                                Please provide a valid File .
+                            </div>
+                            <div class="valid-feedback">
+                                Great !
+                            </div>
                         </div>
                         <div class="form-group">
                             <div class="float-right">

@@ -159,7 +159,7 @@ $(document).ready(function () {
         });
     }
     function storeLink(formData,action) {
-        $("#createLinkModal").modal("hide");
+        // $("#createLinkModal").modal("hide");
         $.ajax({
             url : action,
             type : "post",
@@ -167,12 +167,13 @@ $(document).ready(function () {
             processData: false,
             contentType: false,
             success : function (response) {
+                console.log(response);
                if(response != 0){
                    $.toaster({ message : response, priority : 'success' });
-                   // setTimeout(function() {
-                   //     // wait for toaster message then load page after 2 second
-                   //     window.location.href = "/link" ;
-                   // }, 1000);
+                   setTimeout(function() {
+                       // wait for toaster message then load page after 2 second
+                       window.location.href = "/link" ;
+                   }, 1000);
                } else {
                    $.toaster({ message : 'Invalid Data', priority : 'danger' });
                }
@@ -220,11 +221,15 @@ $(document).ready(function () {
     $(document).on("click","#by-manual",function () {
         $("#backLinkFileDiv").addClass("d-none");
         $("#backLinkFileUrl").removeClass("d-none");
+        $("#createLinkUrl").attr("required", "required");
+        $("#createLinkFile").removeAttr("required");
     });
 
     $(document).on("click","#by-file",function () {
         $("#backLinkFileDiv").removeClass("d-none");
         $("#backLinkFileUrl").addClass("d-none");
+        $("#createLinkFile").attr("required", "required");
+        $("#createLinkUrl").removeAttr("required");
     });
 
 });
