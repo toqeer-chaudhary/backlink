@@ -6,6 +6,9 @@ use App\Model\Link;
 use App\Model\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Session;
+use Excel;
+use File;
 
 class LinkController extends FrontendController
 {
@@ -46,7 +49,7 @@ class LinkController extends FrontendController
     public function store(Request $request)
     {
         if ($request->hasFile("backLinkFile")){
-           echo "hello";
+           $this->import($request);
         } else {
            return $this->validateAndStoreLinks($request);
         }
@@ -125,5 +128,47 @@ class LinkController extends FrontendController
          } else {
              return 0;
          }
+    }
+
+    // excel file
+    public function import($request){
+        //validate the xls file
+        if($request->hasFile('backLinkFile')){
+            $extension = File::extension($request->file("backLinkFile")->getClientOriginalname());
+            if ($extension == "xlsx" || $extension == "xls" || $extension == "csv") {
+
+                $path = $request->file("backLinkFile")->getRealPath();
+                $data = Excel::load($path, function($reader) {
+                })->get();
+                dd($data);
+                if(!empty($data) && $data->count()){
+
+                    foreach ($data as $key => $value) {
+                        $insert[] = [
+                            'name' => $value->name,
+                            'email' => $value->email,
+                            'phone' => $value->phone,
+                        ];
+                    }
+
+                    if(!empty($insert)){
+
+                        $insertData = DB::table('students')->insert($insert);
+                        if ($insertData) {
+                            Session::flash('success', 'Your Data has successfully imported');
+                        }else {
+                            Session::flash('error', 'Error inserting the data..');
+                            return back();
+                        }
+                    }
+                }
+
+                return back();
+
+            }else {
+                Session::flash('error', 'File is a '.$extension.' file.!! Please upload a valid xls/csv file..!!');
+                return back();
+            }
+        }
     }
 }
