@@ -18,7 +18,7 @@
     <div class="wrapper">
         <div class="d-flex">
             {{--sidebar goes here--}}
-            @include("backend.include.side-bar")
+                @include("backend.include.side-bar")
 
             <div class="main">
                 {{--navbar goes here--}}

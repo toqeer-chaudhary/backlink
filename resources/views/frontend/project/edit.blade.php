@@ -1,5 +1,5 @@
 <?php
-//  creating an array of tag id's that are associated with the post
+//  creating an array of tag id's that are associated with the project
 foreach($post->tags as $tag)
 {
     // array of id
@@ -25,7 +25,7 @@ foreach($post->tags as $tag)
             </div>
             <div class="card-body">
                 <form class="updatePostForm" method="post" id="updatePostForm"
-                      action="{{ route("post.update",$post->id) }}"  novalidate enctype="multipart/form-data">
+                      action="{{ route("project",$post->id) }}"  novalidate enctype="multipart/form-data">
                     {{ method_field("PUT") }}
                     {{ csrf_field() }}
                     <input type="hidden" name="updatePost" id="updatePost" value="{{ $post->id }}">

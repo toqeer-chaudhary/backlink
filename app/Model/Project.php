@@ -44,4 +44,20 @@ class Project extends Model
     public function fetchAll(){
         return self::all();
     }
+
+    // store
+    public function storeProject($request){
+        $project = new Project();
+        $project->create($request);
+    }
+
+    // update
+    public function updateProject($request,$project){
+        $project->update($request);
+    }
+
+    // delete
+    public function deleteProject($project){
+        $project->delete();
+    }
 }

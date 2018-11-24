@@ -2,11 +2,20 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Model\Category;
+use App\Model\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ProjectController extends FrontendController
 {
+    private $_project;
+    private $_category;
+    public function __construct(Project $project, Category $category){
+        $this->_project = $project;
+        $this->_category = $category;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +23,9 @@ class ProjectController extends FrontendController
      */
     public function index()
     {
-        return view("frontend.project.index");
+        $projects = $this->_project->fetchAll();
+        $categories = $this->_category->fetchAll();
+        return view("frontend.project.index",compact("projects","categories"));
     }
 
     /**
@@ -35,7 +46,8 @@ class ProjectController extends FrontendController
      */
     public function store(Request $request)
     {
-        //
+        $request["user_id"] = auth()->id();
+        $this->_project->storeProject($request->all());
     }
 
     /**
@@ -67,9 +79,10 @@ class ProjectController extends FrontendController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Project $project)
     {
-        //
+        $request["user_id"] = auth()->id();
+        $this->_project->updateProject($request->all(),$project);
     }
 
     /**
@@ -78,8 +91,7 @@ class ProjectController extends FrontendController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy(Project $project){
+       $this->_project->deleteProject($project);
     }
 }
