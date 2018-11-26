@@ -40,9 +40,14 @@ $(document).ready(function () {
                            storeProject(formData, url);
 
                        } else if (form.classList.contains("createLinkForm")){
-                           var formData = new FormData(this);
-                           var url = "/link";
-                           storeLink(formData, url);
+                           var fileExt = $("#createLinkFile").val().split('.').pop();
+                           if (fileExt == "xlsx" || fileExt == "xls" || fileExt == "csv" ) {
+                               var formData = new FormData(this);
+                               var url = "/link";
+                               storeLink(formData, url);
+                           } else {
+                               $.toaster({ message : ' Only Excel Files are required', priority : 'danger' });
+                           }
                        }
                         //    Edit Process
                          else if (form.classList.contains("editProjectForm")) {

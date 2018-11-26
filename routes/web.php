@@ -29,6 +29,7 @@ Route::namespace('Frontend')->group(function () {
     Route::resource('user','UserController');
     Route::resource('category','CategoryController');
     Route::get('/','HomeController@index')->name('index');
+    Route::get("test","LinkController@check_url");
 //    });
 });
 

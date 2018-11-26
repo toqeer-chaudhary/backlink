@@ -14,6 +14,11 @@
 
 
 @section("main-container")
+    @if (session('error'))
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ session('error') }}</strong>
+        </span>
+    @endif
     <div class="container">
         <div class="row m-5">
             <div class="col-md-4 col-sm-3 col-xs-5">
@@ -126,12 +131,10 @@
                         </div>
                         <div class="form-group d-none" id="backLinkFileDiv">
                             <label for="createLinkFile" class="font-weight-bold">{{ __('Back link File') }} :</label>
-                            <input id="createLinkFile" type="file" class="form-control-file" name="backLinkFile">
+                            <input id="createLinkFile" type="file" class="form-control-file"
+                                   name="backLinkFile" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
                             <div class="invalid-feedback">
                                 Please provide a valid File .
-                            </div>
-                            <div class="valid-feedback">
-                                Great !
                             </div>
                         </div>
                         <div class="form-group">

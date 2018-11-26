@@ -172,7 +172,24 @@ class LinkController extends FrontendController
                         return 0;
                     }
                 }
+            } else {
+                return redirect()->back()->with("error", "Only Excel file required");
             }
         }
     }
+
+    // testing{
+        function check_url($url = "https://www.youtube.com") {
+//
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_HEADER, 1);
+            curl_setopt($ch , CURLOPT_RETURNTRANSFER, 1);
+            $data = curl_exec($ch);
+            $headers = curl_getinfo($ch);
+            dd($headers);
+            curl_close($ch);
+
+            return $headers['http_code'];
+        }
 }
