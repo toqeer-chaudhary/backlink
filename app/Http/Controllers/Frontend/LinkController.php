@@ -49,7 +49,7 @@ class LinkController extends FrontendController
     public function store(Request $request)
     {
         if ($request->hasFile("backLinkFile")){
-           $this->import($request);
+          return $this->import($request);
         } else {
            return $this->validateAndStoreLinks($request);
         }
@@ -102,6 +102,7 @@ class LinkController extends FrontendController
         $this->_link->deleteLink($link);
     }
 
+    // function to validate and store links
     public function validateAndStoreLinks($request){
         $backlinks = explode(",",$request->back_link);
         $duplicateArray = [];
@@ -124,50 +125,53 @@ class LinkController extends FrontendController
         }
         $result = $this->_link->storeLink($backLinksArrays);
          if ($result && $i > 0){
-             return $i . " Links Are Stored Out Of ". count($backlinks) . " rest are duplicate or empty spaces";
+             return $i . " Links Are Stored Out Of ". count($backlinks);
          } else {
              return 0;
          }
     }
 
-    // excel file
+    // function to read data from excel file
     public function import($request){
         //validate the xls file
         if($request->hasFile('backLinkFile')){
             $extension = File::extension($request->file("backLinkFile")->getClientOriginalname());
             if ($extension == "xlsx" || $extension == "xls" || $extension == "csv") {
 
-                $path = $request->file("backLinkFile")->getRealPath();
-                $data = Excel::load($path, function($reader) {
-                })->get();
-                dd($data);
+                $path = $request->file("backLinkFile")->getRealPath(); // getting path of excel file
+                $data = Excel::load($path, function($reader) {})->get(); // getting data from excel file
+
                 if(!empty($data) && $data->count()){
-
+                    // initializing the variables only if the condition true
+                    $backLinksArrays = [];
+                    $duplicateArray = [];
+                    $i = 0;
                     foreach ($data as $key => $value) {
-                        $insert[] = [
-                            'name' => $value->name,
-                            'email' => $value->email,
-                            'phone' => $value->phone,
-                        ];
-                    }
-
-                    if(!empty($insert)){
-
-                        $insertData = DB::table('students')->insert($insert);
-                        if ($insertData) {
-                            Session::flash('success', 'Your Data has successfully imported');
-                        }else {
-                            Session::flash('error', 'Error inserting the data..');
-                            return back();
+                        $backlink = $value->backlinks;  // retrieving the required result from the data
+                        if (ctype_space($backlink) || $backlink == "," || empty($backlink) || !is_string($backlink)) {
+                            continue;
+                        } elseif (in_array($backlink,$duplicateArray)) {
+                            // checking if data is dubplicated
+                            continue;
+                        } else {
+                            // if data is not duplicated then store it in duplicate array and store the data
+                            // further in database
+                            $i++;
+                            array_push($duplicateArray,$backlink); // if backlink not exist it will store
+                            $backLinksList["user_id"] = auth()->id();
+                            $backLinksList["project_id"] = $request->project_id;
+                            $backLinksList["back_link"] = $backlink ;
+                            $backLinksList["created_at"] = now() ;
+                            array_push($backLinksArrays,$backLinksList); // array of rows/objects
                         }
                     }
+                    $result = $this->_link->storeLink($backLinksArrays); // storing data in db
+                    if ($result && $i > 0){
+                        return " " . $i . " Links Are Stored Out Of ". $data->count();
+                    } else {
+                        return 0;
+                    }
                 }
-
-                return back();
-
-            }else {
-                Session::flash('error', 'File is a '.$extension.' file.!! Please upload a valid xls/csv file..!!');
-                return back();
             }
         }
     }

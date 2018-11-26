@@ -170,10 +170,10 @@ $(document).ready(function () {
                 console.log(response);
                if(response != 0){
                    $.toaster({ message : response, priority : 'success' });
-                   // setTimeout(function() {
-                   //     // wait for toaster message then load page after 2 second
-                   //     window.location.href = "/link" ;
-                   // }, 1000);
+                   setTimeout(function() {
+                       // wait for toaster message then load page after 2 second
+                       window.location.href = "/link" ;
+                   }, 1000);
                } else {
                    $.toaster({ message : 'Invalid Data', priority : 'danger' });
                }
