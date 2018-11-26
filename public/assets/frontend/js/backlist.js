@@ -41,7 +41,12 @@ $(document).ready(function () {
 
                        } else if (form.classList.contains("createLinkForm")){
                            var fileExt = $("#createLinkFile").val().split('.').pop();
-                           if (fileExt == "xlsx" || fileExt == "xls" || fileExt == "csv" ) {
+                           // console.log(($("#createLinkFile").val() != ""));
+                           if ($("#createLinkFile").val() == "") {
+                               var formData = new FormData(this);
+                               var url = "/link";
+                               storeLink(formData, url);
+                           } else if((fileExt == "xlsx" || fileExt == "xls" || fileExt == "csv") ) {
                                var formData = new FormData(this);
                                var url = "/link";
                                storeLink(formData, url);

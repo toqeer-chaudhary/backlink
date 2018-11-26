@@ -104,7 +104,7 @@ class LinkController extends FrontendController
 
     // function to validate and store links
     public function validateAndStoreLinks($request){
-        $backlinks = explode(",",$request->back_link);
+        $backlinks = explode("\n",$request->back_link);
         $duplicateArray = [];
         $backLinksArrays = [];
         $i = 0;
