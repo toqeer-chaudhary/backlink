@@ -48,9 +48,9 @@ class LoginController extends Controller
 
         if (auth()->user()->status == APP_CONSTS::YES) { // if user status is inactive
             if (auth()->user()->is_admin == APP_CONSTS::YES) {
-                return redirect()->to("admin");
+                return redirect()->route("admin");
             } else {
-                return redirect()->to("project");
+                return redirect()->route("project.index");
             }
         } else { // if not active
             $this->guard()->logout();

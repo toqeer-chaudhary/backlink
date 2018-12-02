@@ -28,9 +28,8 @@
                         <div class="card-body py-2">
                             <div class="row">
                                 <div class="col-12 col-md-6 align-self-center text-center text-md-left">
-                                    {{--<h4>{{ $posts->count() }}</h4>--}}
-                                    <h4>{{ 6 }}</h4>
-                                    <p class="mb-0">Total Posts</p>
+                                    <h4>{{ \App\Model\Project::all()->count() }}</h4>
+                                    <p class="mb-0">Total Projects</p>
                                 </div>
                                 <div class="col-12 col-md-6 align-self-center text-center text-md-right">
                                     <div data-label="100%" class="doughnut mt-2 doughnut-success doughnut-100"></div>
@@ -44,9 +43,8 @@
                         <div class="card-body py-2">
                             <div class="row">
                                 <div class="col-12 col-md-6 align-self-center text-center text-md-left">
-                                    {{--<h4>{{ $tags->count() }}</h4>--}}
-                                    <h4>{{ 4 }}</h4>
-                                    <p class="mb-0">Total Tags</p>
+                                    <h4>{{ \App\Model\Link::all()->count() }}</h4>
+                                    <p class="mb-0">Total Links</p>
                                 </div>
                                 <div class="col-12 col-md-6 align-self-center text-center text-md-right">
                                     <div data-label="100%" class="doughnut mt-2 doughnut-warning doughnut-100"></div>
@@ -60,8 +58,7 @@
                         <div class="card-body py-2">
                             <div class="row">
                                 <div class="col-12 col-md-6 align-self-center text-center text-md-left">
-                                    {{--<h4>{{ $categories->count() }}</h4>--}}
-                                    <h4>{{ 4 }}</h4>
+                                    <h4>{{ \App\Model\Category::all()->count() }}</h4>
                                     <p class="mb-0">Total Categories</p>
                                 </div>
                                 <div class="col-12 col-md-6 align-self-center text-center text-md-right">

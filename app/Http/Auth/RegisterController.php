@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Model\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -31,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/project';
 
     /**
      * Create a new controller instance.
@@ -55,8 +52,6 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'date' => 'required',
-            'phone' => 'required|unique:users|numeric|digits:11',
         ]);
     }
 
@@ -64,7 +59,7 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return \App\Model\User
      */
     protected function create(array $data)
     {
@@ -72,19 +67,6 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'image' => mt_rand(1,6)."jpg",
-            'date' => $data["date"],
-            'phone' => $data["phone"],
         ]);
-    }
-
-    public function register(Request $request)
-    {
-
-        $this->validator($request->all())->validate();
-
-        event(new Registered($user = $this->create($request->all())));
-
-        return redirect()->back()->with("success","Thanks For Registration we will catch you shortly ");
     }
 }

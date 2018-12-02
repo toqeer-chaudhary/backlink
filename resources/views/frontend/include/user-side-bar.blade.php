@@ -5,12 +5,12 @@
             <span class="align-middle">{{ config('app.name') }}</span>
         </a>
         <ul class="sidebar-nav">
-            <li class="sidebar-item active">
-                <a href="{{ route("admin") }}" class="sidebar-link">
-                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+            {{--<li class="sidebar-item active">--}}
+                {{--<a href="{{ route("admin") }}" class="sidebar-link">--}}
+                    {{--<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>--}}
                     {{--<span class="sidebar-badge badge badge-primary">6</span>--}}
-                </a>
-            </li>
+                {{--</a>--}}
+            {{--</li>--}}
 
             <li class="sidebar-item">
                 <a href="{{ route("project.index") }}" class="sidebar-link">
